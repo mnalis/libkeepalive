@@ -7,7 +7,7 @@
                            |_|
 */
 
-/* Fabio Busatto */
+/* Fabio Busatto, Matija Nalis */
 
 /*
   This program is free software; you can redistribute it and/or modify
@@ -35,13 +35,13 @@
 
 int main(void);
 
-int main()
+int test_sock (int domain) 
 {
    int s;
    int optval;
    socklen_t optlen = sizeof(optval);
 
-   if((s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
+   if((s = socket(domain, SOCK_STREAM, IPPROTO_TCP)) < 0) {
       perror("socket()");
       exit(EXIT_FAILURE);
    }
@@ -83,6 +83,15 @@ int main()
    }
    
    close(s);
+}
+
+int main()
+{
+   printf ("Test IPv4\n");
+   test_sock (AF_INET);
+
+   printf ("\nTest IPv6\n");
+   test_sock (AF_INET6);
 
    exit(EXIT_SUCCESS);
 }
