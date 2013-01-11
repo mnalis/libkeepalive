@@ -37,6 +37,8 @@
 #include <sys/socket.h>
 #include <netinet/tcp.h>
 
+#define SOCK_TYPE_MASK 0xf
+
 int socket(int domain, int type, int protocol);
 
 int socket(int domain, int type, int protocol)
@@ -52,7 +54,7 @@ int socket(int domain, int type, int protocol)
   }
 
   if((s = (*libc_socket)(domain, type, protocol)) != -1) {
-    if((domain == PF_INET) && (type == SOCK_STREAM)) {
+    if((domain == PF_INET) && ((type & SOCK_TYPE_MASK) == SOCK_STREAM)) {
       if(!(env = getenv("KEEPALIVE")) || strcasecmp(env, "off")) {
         optval = 1;
       } else {
