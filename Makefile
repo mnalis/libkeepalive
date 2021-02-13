@@ -17,3 +17,7 @@ clean:
 	make -C src/ clean
 	make -C test/ clean
 	rm -f libkeepalive.so
+
+install:
+	install libkeepalive.so /usr/local/lib
+	ldconfig
